@@ -1,7 +1,8 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { connect } from "react-redux";
-import * as AuthActions from "../../store/actions/AuthActions";
+import { handleLogin, handleLogout } from "../../store/actions/AuthActions";
+import { useNavigate } from "react-router-dom";
 
 const SigninSchema = Yup.object().shape({
   login: Yup.string()
@@ -14,7 +15,9 @@ const SigninSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const Login = ({ handleLogin, handleLogout }) => {
+const Login = ({ handleLogin, handleLogout, dispatch }) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <h1>Login</h1>
@@ -25,7 +28,7 @@ const Login = ({ handleLogin, handleLogout }) => {
         }}
         validationSchema={SigninSchema}
         onSubmit={(values) => {
-          handleLogin(values);
+          handleLogin(values, dispatch, navigate);
         }}
       >
         {({ errors, touched }) => (
@@ -37,7 +40,10 @@ const Login = ({ handleLogin, handleLogout }) => {
             {errors.senha && touched.senha ? <div>{errors.senha}</div> : null}
 
             <button type="submit">Entrar</button>
-            <button type="button" onClick={handleLogout}>
+            <button
+              type="button"
+              onClick={() => handleLogout(dispatch, navigate)}
+            >
               Sair
             </button>
           </Form>
@@ -47,13 +53,11 @@ const Login = ({ handleLogin, handleLogout }) => {
   );
 };
 
-// const mapStateToProps = state => ({
-//   auth: state.authReducer.auth,
-// })
+const mapDispatchToProps = () => ({
+  handleLogin: (values, dispatch, navigate) =>
+    handleLogin(values, dispatch, navigate),
 
-const mapDispatchToProps = (dispatch) => ({
-  handleLogin: (values) => dispatch(AuthActions.handleLogin(values)),
-  handleLogout: () => AuthActions.handleLogout(),
+  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
 });
 
 export default connect(mapDispatchToProps)(Login);

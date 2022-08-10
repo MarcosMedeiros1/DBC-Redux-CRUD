@@ -2,26 +2,36 @@ const INITIAL_STATE = {
   auth: {
     token: "",
     isLogged: false,
+    isLoading: true,
   },
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   if (action.type === "SET_LOGIN") {
-    console.log("aqui");
-
     return {
       auth: {
         token: action.token,
         isLogged: true,
+        isLoading: false,
       },
     };
   }
+
   if (action.type === "SET_LOGOUT") {
-    console.log("aqui");
     return {
       auth: {
         token: action.token,
         isLogged: false,
+        isLoading: false,
+      },
+    };
+  }
+
+  if (action.type === "SET_LOADING") {
+    return {
+      auth: {
+        ...state,
+        isLoading: action.isLoading,
       },
     };
   }

@@ -1,22 +1,35 @@
-import { apiDbc } from "../../api";
-
-const buscaPessoas = () => {
-  // try {
-  //   const { data } = apiDbc.get("/pessoa?pagina=0&tamanhoDasPaginas=20");
-  //   return data;
-  // } catch (error) {
-  //   console.log(error);
-  // }
-};
-
 const INITIAL_STATE = {
-  pessoas: buscaPessoas(),
+  pessoas: [],
+  pessoa: {},
+  isLoading: true,
+  isUpdate: false,
 };
 
-const pessoasReducer = (state = INITIAL_STATE) => {
-  return {
-    state,
-  };
+const pessoasReducer = (state = INITIAL_STATE, action) => {
+  if (action.type === "SET_PESSOA") {
+    return {
+      ...state,
+      pessoas: action.pessoas,
+    };
+  }
+
+  if (action.type === "SET_PESSOA_BY_ID") {
+    return {
+      ...state,
+      pessoa: action.pessoa,
+      isLoading: false,
+      isUpdate: true,
+    };
+  }
+
+  if (action.type === "REGISTER_PESSOA") {
+    return {
+      ...state,
+      isLoading: false,
+      isUpdate: false,
+    };
+  }
+  return state;
 };
 
 export default pessoasReducer;
