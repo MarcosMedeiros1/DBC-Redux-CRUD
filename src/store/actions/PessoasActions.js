@@ -57,9 +57,10 @@ export const handleEditPessoa = async (values, idPessoa, navigate) => {
   }
 };
 
-export const handleDeletarPessoa = async (idPessoa) => {
+export const handleDeletarPessoa = async (idPessoa, dispatch) => {
   try {
     await apiDbc.delete(`/pessoa/${idPessoa}`);
+    getPessoas(dispatch);
   } catch (error) {
     console.log(error);
   }

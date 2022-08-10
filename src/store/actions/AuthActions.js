@@ -4,8 +4,8 @@ export const handleLogin = async (values, dispatch, navigate) => {
   try {
     const { data } = await apiDbc.post("/auth", values);
 
-    apiDbc.defaults.headers.common["Authorization"] = data;
     localStorage.setItem("token", data);
+    apiDbc.defaults.headers.common["Authorization"] = data;
 
     const auth = {
       type: "SET_LOGGED",
@@ -19,7 +19,7 @@ export const handleLogin = async (values, dispatch, navigate) => {
   }
 };
 
-export const handleLogout = (dispatch, navigate) => {
+export const handleLogout = (dispatch) => {
   localStorage.removeItem("token");
   apiDbc.defaults.headers.common["Authorization"] = undefined;
 
@@ -29,7 +29,6 @@ export const handleLogout = (dispatch, navigate) => {
   };
 
   dispatch(auth);
-  navigate("/login");
 };
 
 export const isAuth = (dispatch) => {

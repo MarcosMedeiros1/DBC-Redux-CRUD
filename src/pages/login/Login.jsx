@@ -1,63 +1,84 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { connect } from "react-redux";
-import { handleLogin, handleLogout } from "../../store/actions/AuthActions";
+import { handleLogin } from "../../store/actions/AuthActions";
 import { useNavigate } from "react-router-dom";
+import {
+  ErrorMessage,
+  FormContainer,
+  FormDiv,
+  FormItem,
+  FormSection,
+  SubTitle,
+  TitleDiv,
+} from "../../components/form/Form";
+import { ButtonPrimary } from "../../components/button/Button";
 
 const SigninSchema = Yup.object().shape({
   login: Yup.string()
     .min(2, "Mínimo 2 caracteres")
     .max(20, "Máximo 20 caracteres")
-    .required("Required"),
+    .required("Campo obrigatório"),
   senha: Yup.string()
     .min(3, "Mínimo 3 caracteres")
     .max(50, "Máximo 50 caracteres")
-    .required("Required"),
+    .required("Campo obrigatório"),
 });
 
-const Login = ({ handleLogin, handleLogout, dispatch }) => {
+const Login = ({ handleLogin, dispatch }) => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h1>Login</h1>
-      <Formik
-        initialValues={{
-          login: "",
-          senha: "",
-        }}
-        validationSchema={SigninSchema}
-        onSubmit={(values) => {
-          handleLogin(values, dispatch, navigate);
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <Field name="login" />
-            {errors.login && touched.login ? <div>{errors.login}</div> : null}
+    <FormContainer>
+      <FormSection>
+        <TitleDiv>
+          <h1>Realizar login</h1>
+          <SubTitle>Informe seu login e senha abaixo</SubTitle>
+        </TitleDiv>
+        <Formik
+          initialValues={{
+            login: "",
+            senha: "",
+          }}
+          validationSchema={SigninSchema}
+          onSubmit={(values) => {
+            handleLogin(values, dispatch, navigate);
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <FormDiv>
+                <FormItem>
+                  <label htmlFor="login">LOGIN</label>
+                  <Field name="login" placeholder="Login" />
+                  {errors.login && touched.login ? (
+                    <ErrorMessage>{errors.login}</ErrorMessage>
+                  ) : null}
+                </FormItem>
 
-            <Field name="senha" />
-            {errors.senha && touched.senha ? <div>{errors.senha}</div> : null}
+                <FormItem>
+                  <label htmlFor="senha">SENHA</label>
+                  <Field type="password" name="senha" placeholder="Senha" />
+                  {errors.senha && touched.senha ? (
+                    <ErrorMessage>{errors.senha}</ErrorMessage>
+                  ) : null}
+                </FormItem>
 
-            <button type="submit">Entrar</button>
-            <button
-              type="button"
-              onClick={() => handleLogout(dispatch, navigate)}
-            >
-              Sair
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+                <ButtonPrimary padding={"16px 32px"} type="submit">
+                  Entrar
+                </ButtonPrimary>
+              </FormDiv>
+            </Form>
+          )}
+        </Formik>
+      </FormSection>
+    </FormContainer>
   );
 };
 
 const mapDispatchToProps = () => ({
   handleLogin: (values, dispatch, navigate) =>
     handleLogin(values, dispatch, navigate),
-
-  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
 });
 
 export default connect(mapDispatchToProps)(Login);

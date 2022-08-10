@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom";
+import { HeaderContainer } from "./Header.styled";
+import Logo from "./Logo";
+import Menu from "./Menu";
 
-const Header = () => {
+const Header = ({ display, page }) => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to={"/"}>Pessoas</Link>
-        </li>
-      </ul>
-    </nav>
+    <HeaderContainer>
+      <Logo page={page} />
+      <Menu display={display} />
+    </HeaderContainer>
   );
 };
-
 export default Header;
