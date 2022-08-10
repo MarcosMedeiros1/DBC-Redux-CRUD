@@ -2,7 +2,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { handleLogin } from "../../store/actions/AuthActions";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ErrorMessage,
   FormContainer,
@@ -67,6 +67,11 @@ const Login = ({ handleLogin, dispatch }) => {
                 <ButtonPrimary padding={"16px 32px"} type="submit">
                   Entrar
                 </ButtonPrimary>
+
+                <span>
+                  Não possui uma conta?{" "}
+                  <Link to={"/cadastrar-usuario"}>Cadastrar</Link>
+                </span>
               </FormDiv>
             </Form>
           )}

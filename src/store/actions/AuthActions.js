@@ -50,3 +50,12 @@ export const isAuth = (dispatch) => {
     dispatch(auth);
   }
 };
+
+export const handleRegisterUser = async (values, navigate) => {
+  try {
+    await apiDbc.post("/auth/create", values);
+    navigate("/login");
+  } catch (error) {
+    console.log(error);
+  }
+};
