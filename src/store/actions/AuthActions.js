@@ -14,7 +14,7 @@ export const handleLogin = async (values, dispatch, navigate) => {
     };
 
     dispatch(auth);
-    navigate("/");
+    navigate("/pessoas");
   } catch (error) {
     console.log(error);
     Toast.fire({
@@ -28,7 +28,7 @@ export const handleLogout = (dispatch) => {
   localStorage.removeItem("token");
   apiDbc.defaults.headers.common["Authorization"] = "";
 
-  window.location.href = "/login";
+  window.location.href = "/";
 
   const logout = {
     type: "SET_LOGOUT",
@@ -63,7 +63,7 @@ export const handleRegisterUser = async (values, navigate) => {
       title: "Cadastrado com sucesso",
       icon: "success",
     });
-    navigate("/login");
+    navigate("/");
   } catch (error) {
     console.log(error);
     Toast.fire({

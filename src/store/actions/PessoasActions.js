@@ -24,7 +24,7 @@ export const handleRegisterPessoa = async (values) => {
     });
     // Por algum motivo o navigate("/") não funcionou aqui
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/pessoas";
     }, 1000);
   } catch (error) {
     console.log(error);
@@ -52,7 +52,7 @@ export const handleEditPessoa = async (values, idPessoa, navigate) => {
   try {
     await apiDbc.put(`/pessoa/${idPessoa}`, values);
     Toast.fire({ title: "Pessoa editada com sucesso", icon: "success" });
-    navigate("/");
+    navigate("/pessoas");
   } catch (error) {
     console.log(error);
     Toast.fire({ title: "Dados incorretos", icon: "error" });

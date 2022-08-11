@@ -158,7 +158,7 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
                       type="button"
                       padding={"12px 32px"}
                       disabled={false}
-                      onClick={() => navigate("/")}
+                      onClick={() => navigate("/pessoas")}
                     >
                       Cancelar
                     </ButtonSecondary>

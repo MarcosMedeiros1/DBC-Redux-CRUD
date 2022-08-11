@@ -70,7 +70,7 @@ const Users = ({ handleRegisterUser }) => {
                     Cadastrar
                   </ButtonPrimary>
                   <span>
-                    Já possui uma conta? <Link to={"/login"}>Fazer Login</Link>
+                    Já possui uma conta? <Link to={"/"}>Fazer Login</Link>
                   </span>
                 </FormDiv>
               </Form>

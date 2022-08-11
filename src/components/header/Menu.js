@@ -11,7 +11,7 @@ const Menu = ({ display, handleLogout, dispatch }) => {
     <nav>
       <Ul>
         <li style={{ display: display }}>
-          <Link to="/">
+          <Link to="/pessoas">
             Pessoas
             <BsPeopleFill />
           </Link>

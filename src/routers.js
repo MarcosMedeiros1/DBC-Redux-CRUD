@@ -27,7 +27,7 @@ const Routers = ({ auth, dispatch }) => {
       <Routes>
         {auth.isLogged ? (
           <>
-            <Route path="/" element={<Pessoas />} />
+            <Route path="/pessoas" element={<Pessoas />} />
             <Route path="/cadastrar-pessoa" element={<FormPessoa />} />
             <Route path="/editar-pessoa/:idPessoa" element={<FormPessoa />} />
 
@@ -53,7 +53,7 @@ const Routers = ({ auth, dispatch }) => {
           </>
         ) : (
           <>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/cadastrar-usuario" element={<Users />} />
           </>
         )}
