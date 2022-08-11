@@ -1,5 +1,5 @@
 import { apiDbc } from "../../api";
-import toast, { Toaster } from "react-hot-toast";
+import { Toast } from "../../components/toast/Toast";
 
 export const handleLogin = async (values, dispatch, navigate) => {
   try {
@@ -17,13 +17,11 @@ export const handleLogin = async (values, dispatch, navigate) => {
     navigate("/");
   } catch (error) {
     console.log(error);
-    toast.error("Login ou senha incorretos");
+    Toast.fire({
+      title: "Login ou senha incorretos",
+      icon: "error",
+    });
   }
-  return (
-    <>
-      <Toaster />;
-    </>
-  );
 };
 
 export const handleLogout = (dispatch) => {
@@ -61,8 +59,16 @@ export const isAuth = (dispatch) => {
 export const handleRegisterUser = async (values, navigate) => {
   try {
     await apiDbc.post("/auth/create", values);
+    Toast.fire({
+      title: "Cadastrado com sucesso",
+      icon: "success",
+    });
     navigate("/login");
   } catch (error) {
     console.log(error);
+    Toast.fire({
+      title: "Login ou senha incorretos",
+      icon: "error",
+    });
   }
 };
