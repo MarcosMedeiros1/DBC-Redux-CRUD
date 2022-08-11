@@ -35,7 +35,7 @@ const Contatos = ({ contatos, dispatch }) => {
     return (
       <>
         <Container>
-          <Header display={"inline"} page={"Pessoas"} />
+          <Header display={"inline"} page={"Contatos"} />
           <ContainerList>
             <ListAdd>
               <ButtonSecondary
@@ -58,7 +58,7 @@ const Contatos = ({ contatos, dispatch }) => {
   return (
     <>
       <Container>
-        <Header display={"inline"} page={"Pessoas"} />
+        <Header display={"inline"} page={"Contatos"} />
         <ContainerList>
           <ListAdd>
             <ButtonSecondary

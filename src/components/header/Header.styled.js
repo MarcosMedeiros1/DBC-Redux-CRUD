@@ -24,15 +24,17 @@ export const Ul = styled.ul`
   list-style: none;
   gap: 24px;
 
-  & a {
+  & button {
     display: flex;
     align-items: center;
     gap: 8px;
-    text-decoration: none;
+    background: none;
+    border: none;
     padding-bottom: 1px;
     color: ${textLight};
     position: relative;
     font-size: 1.2rem;
+    cursor: pointer;
 
     :hover {
       color: #fff;

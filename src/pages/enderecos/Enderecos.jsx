@@ -35,7 +35,7 @@ const Enderecos = ({ enderecos, dispatch }) => {
     return (
       <>
         <Container>
-          <Header display={"inline"} page={"Pessoas"} />
+          <Header display={"inline"} page={"Endereços"} />
           <ContainerList>
             <ListAdd>
               <ButtonSecondary
@@ -58,7 +58,7 @@ const Enderecos = ({ enderecos, dispatch }) => {
   return (
     <>
       <Container>
-        <Header display={"inline"} page={"Pessoas"} />
+        <Header display={"inline"} page={"Endereços"} />
         <ContainerList>
           <ListAdd>
             <ButtonSecondary

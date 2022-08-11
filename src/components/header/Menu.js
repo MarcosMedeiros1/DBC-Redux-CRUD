@@ -1,7 +1,7 @@
 import { Ul } from "./Header.styled";
 import { FiLogOut } from "react-icons/fi";
 import { BsPeopleFill } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { handleLogout } from "../../store/actions/AuthActions";
 import { connect } from "react-redux";
 
@@ -11,10 +11,10 @@ const Menu = ({ display, handleLogout, dispatch }) => {
     <nav>
       <Ul>
         <li style={{ display: display }}>
-          <Link to="/pessoas">
+          <button onClick={() => navigate("/pessoas")}>
             Pessoas
             <BsPeopleFill />
-          </Link>
+          </button>
         </li>
         <li>
           <button onClick={() => handleLogout(dispatch, navigate)}>
