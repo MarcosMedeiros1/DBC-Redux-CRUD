@@ -25,10 +25,20 @@ const pessoasReducer = (state = INITIAL_STATE, action) => {
   if (action.type === "REGISTER_PESSOA") {
     return {
       ...state,
+      pessoa: {},
       isLoading: false,
       isUpdate: false,
     };
   }
+
+  if (action.type === "CLEAN_PEOPLE") {
+    return {
+      ...state,
+      pessoa: {},
+      isLoading: true,
+    };
+  }
+
   return state;
 };
 

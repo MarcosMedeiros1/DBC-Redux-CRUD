@@ -8,6 +8,8 @@ import { Loading } from "./components/loading/Loading";
 import NotFound from "./pages/notFound/NotFound";
 import FormPessoa from "./pages/pessoas/FormPessoa";
 import Users from "./pages/users/Users";
+import Enderecos from "./pages/enderecos/Enderecos";
+import FormEndereco from "./pages/enderecos/FormEndereco";
 
 const Routers = ({ auth, dispatch }) => {
   useEffect(() => {
@@ -26,6 +28,16 @@ const Routers = ({ auth, dispatch }) => {
             <Route path="/" element={<Pessoas />} />
             <Route path="/cadastrar-pessoa" element={<FormPessoa />} />
             <Route path="/editar-pessoa/:idPessoa" element={<FormPessoa />} />
+
+            <Route path="/enderecos/:idPessoa" element={<Enderecos />} />
+            <Route
+              path="/cadastrar-endereco/:idPessoa"
+              element={<FormEndereco />}
+            />
+            <Route
+              path="/editar-endereco/:idPessoa/:idEndereco"
+              element={<FormEndereco />}
+            />
           </>
         ) : (
           <>

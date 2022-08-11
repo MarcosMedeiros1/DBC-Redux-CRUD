@@ -7,20 +7,19 @@ import { connect } from "react-redux";
 
 const Menu = ({ display, handleLogout, dispatch }) => {
   const navigate = useNavigate();
-
   return (
     <nav>
       <Ul>
         <li style={{ display: display }}>
-          <Link to="/pessoas">
+          <Link to="/">
             Pessoas
             <BsPeopleFill />
           </Link>
         </li>
         <li>
-          <Link to="/login" onClick={() => handleLogout(dispatch)}>
+          <button onClick={() => handleLogout(dispatch, navigate)}>
             Sair <FiLogOut />
-          </Link>
+          </button>
         </li>
       </Ul>
     </nav>
@@ -28,7 +27,7 @@ const Menu = ({ display, handleLogout, dispatch }) => {
 };
 
 const mapDispatchToProps = () => ({
-  handleLogout: (dispatch) => handleLogout(dispatch),
+  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
 });
 
 export default connect(mapDispatchToProps)(Menu);

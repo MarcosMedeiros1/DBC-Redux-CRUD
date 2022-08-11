@@ -21,14 +21,14 @@ export const handleLogin = async (values, dispatch, navigate) => {
 
 export const handleLogout = (dispatch) => {
   localStorage.removeItem("token");
-  apiDbc.defaults.headers.common["Authorization"] = undefined;
+  apiDbc.defaults.headers.common["Authorization"] = "";
 
-  const auth = {
+  window.location.href = "/login";
+
+  const logout = {
     type: "SET_LOGOUT",
-    token: "",
   };
-
-  dispatch(auth);
+  dispatch(logout);
 };
 
 export const isAuth = (dispatch) => {

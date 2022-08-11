@@ -13,24 +13,13 @@ export const getPessoas = async (dispatch) => {
   }
 };
 
-export const navigateRegisterPessoa = (navigate, dispatch) => {
-  navigate("/cadastrar-pessoa");
-  const pessoas = {
-    type: "REGISTER_PESSOA",
-  };
-  dispatch(pessoas);
-};
-
 export const handleRegisterPessoa = async (values, navigate) => {
   try {
     await apiDbc.post("/pessoa", values);
+    navigatePessoas(navigate);
   } catch (error) {
     console.log(error);
   }
-};
-
-export const navigateEditPessoa = (idPessoa, navigate) => {
-  navigate(`/editar-pessoa/${idPessoa}`);
 };
 
 export const handleSetEditPessoa = async (idPessoa, dispatch) => {
@@ -51,17 +40,21 @@ export const handleSetEditPessoa = async (idPessoa, dispatch) => {
 export const handleEditPessoa = async (values, idPessoa, navigate) => {
   try {
     await apiDbc.put(`/pessoa/${idPessoa}`, values);
-    navigate("/");
+    navigatePessoas(navigate);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const handleDeletarPessoa = async (idPessoa, dispatch) => {
+export const handleDeletePessoa = async (idPessoa, dispatch) => {
   try {
     await apiDbc.delete(`/pessoa/${idPessoa}`);
     getPessoas(dispatch);
   } catch (error) {
     console.log(error);
   }
+};
+
+const navigatePessoas = (navigate) => {
+  navigate("/");
 };

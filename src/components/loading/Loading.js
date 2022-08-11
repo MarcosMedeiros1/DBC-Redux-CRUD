@@ -10,7 +10,7 @@ export const Loading = styled.button`
       transform: rotate(360deg);
     }
   }
-  background-color: #fff;
+  background-color: ${backgroundDark};
   display: inline-block;
   position: fixed;
   top: 50%;

@@ -19,6 +19,7 @@ import {
   cpfMask,
   dateMask,
   FormatDateBrToUsa,
+  FormatDateUsaToBr,
   OnlyNumbers,
 } from "../../utils/utils";
 import { ButtonPrimary, ButtonSecondary } from "../../components/button/Button";
@@ -35,13 +36,13 @@ const FormSchema = Yup.object().shape({
     .max(50, "Máximo 50 caracteres")
     .required("Campo obrigatório"),
   dataNascimento: Yup.string()
-    // .transform((value) => OnlyNumbers(value))
+    .transform((value) => OnlyNumbers(value))
     .min(8, "Mínimo 8 caracteres")
     .max(10, "Máximo 8 caracteres")
     .required("Campo obrigatório")
     .required("Campo obrigatório"),
   cpf: Yup.string()
-    // .transform((value) => OnlyNumbers(value))
+    .transform((value) => OnlyNumbers(value))
     .min(11, "Mínimo 11 caracteres")
     .max(111, "Máximo 11 caracteres")
     .required("Campo obrigatório")
@@ -54,8 +55,18 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    return () => {
+      dispatch({
+        type: "CLEAN_PEOPLE",
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     if (idPessoa) {
       handleSetEditPessoa(idPessoa, dispatch);
+    } else {
+      dispatch({ type: "REGISTER_PESSOA" });
     }
   }, []);
 
@@ -72,13 +83,13 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
 
         <Formik
           initialValues={{
-            nome: pessoa.nome ? pessoa.nome : "",
-            dataNascimento: pessoa.dataNascimento ? pessoa.dataNascimento : "",
-            cpf: pessoa.cpf ? pessoa.cpf : "",
-            email: pessoa.email ? pessoa.email : "",
+            nome: pessoa.nome || "",
+            dataNascimento: FormatDateUsaToBr(pessoa.dataNascimento) || "",
+            cpf: pessoa.cpf || "",
+            email: pessoa.email || "",
           }}
           validationSchema={FormSchema}
-          onSubmit={(values) => {
+          onSubmit={(values, { resetForm }) => {
             values.dataNascimento = FormatDateBrToUsa(values.dataNascimento);
             values.cpf = OnlyNumbers(values.cpf);
 
@@ -89,6 +100,7 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
             } else {
               toast.error("Insira uma data válida");
             }
+            resetForm({ values: "" });
           }}
         >
           {({ errors, touched }) => (
@@ -145,12 +157,17 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
                     <ButtonSecondary
                       type="button"
                       padding={"12px 32px"}
+                      disabled={false}
                       onClick={() => navigate("/")}
                     >
                       Cancelar
                     </ButtonSecondary>
 
-                    <ButtonPrimary type="submit" padding={"12px 32px"}>
+                    <ButtonPrimary
+                      type="submit"
+                      padding={"12px 32px"}
+                      disabled={false}
+                    >
                       {isUpdate ? "Atualizar" : "Cadastrar"}
                     </ButtonPrimary>
                   </div>
