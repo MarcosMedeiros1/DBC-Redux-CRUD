@@ -13,10 +13,14 @@ export const getPessoas = async (dispatch) => {
   }
 };
 
-export const handleRegisterPessoa = async (values, navigate) => {
+export const handleRegisterPessoa = async (values) => {
   try {
     await apiDbc.post("/pessoa", values);
-    navigatePessoas(navigate);
+
+    // Por algum motivo o navigate("/") não funcionou aqui
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 500);
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +44,7 @@ export const handleSetEditPessoa = async (idPessoa, dispatch) => {
 export const handleEditPessoa = async (values, idPessoa, navigate) => {
   try {
     await apiDbc.put(`/pessoa/${idPessoa}`, values);
-    navigatePessoas(navigate);
+    navigate("/");
   } catch (error) {
     console.log(error);
   }
@@ -53,8 +57,4 @@ export const handleDeletePessoa = async (idPessoa, dispatch) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-const navigatePessoas = (navigate) => {
-  navigate("/");
 };

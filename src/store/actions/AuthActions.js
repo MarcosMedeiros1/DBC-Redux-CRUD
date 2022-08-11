@@ -1,4 +1,5 @@
 import { apiDbc } from "../../api";
+import toast, { Toaster } from "react-hot-toast";
 
 export const handleLogin = async (values, dispatch, navigate) => {
   try {
@@ -16,7 +17,13 @@ export const handleLogin = async (values, dispatch, navigate) => {
     navigate("/");
   } catch (error) {
     console.log(error);
+    toast.error("Login ou senha incorretos");
   }
+  return (
+    <>
+      <Toaster />;
+    </>
+  );
 };
 
 export const handleLogout = (dispatch) => {

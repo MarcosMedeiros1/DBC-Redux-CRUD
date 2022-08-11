@@ -48,10 +48,6 @@ export const handleEditEndereco = async (
   }
 };
 
-const navigateEnderecos = (idPessoa, navigate) => {
-  navigate(`/enderecos/${idPessoa}`);
-};
-
 export const handleDeleteEndereco = async (idEndereco, idPessoa, dispatch) => {
   try {
     await apiDbc.delete(`/endereco/${idEndereco}`);
@@ -59,4 +55,8 @@ export const handleDeleteEndereco = async (idEndereco, idPessoa, dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const navigateEnderecos = (idPessoa, navigate) => {
+  navigate(`/enderecos/${idPessoa}`);
 };

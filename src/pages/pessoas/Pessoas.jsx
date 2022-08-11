@@ -60,9 +60,9 @@ const Pessoas = ({ pessoas, dispatch }) => {
           <ListAdd>
             <ButtonSecondary
               type="button"
-              onClick={() => navigate("/cadastrar-pessoa")}
               padding={"12px 24px"}
               fontSize={"1rem"}
+              onClick={() => navigate("/cadastrar-pessoa")}
             >
               Cadastrar pessoa <FaUserPlus />
             </ButtonSecondary>
@@ -131,6 +131,7 @@ const Pessoas = ({ pessoas, dispatch }) => {
                       type="button"
                       padding={"6px 12px"}
                       fontSize={"14px"}
+                      onClick={() => navigate(`/contatos/${idPessoa}`)}
                     >
                       Contatos
                     </ButtonSecondary>

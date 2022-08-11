@@ -1,5 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import toast, { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import MaskedInput from "react-text-mask";
 import { cepMask, OnlyNumbers } from "../../utils/utils";
@@ -78,14 +79,14 @@ const FormEndereco = ({ endereco, dispatch, isLoading, isUpdate }) => {
     const cep = OnlyNumbers(event.target.value);
 
     if (cep.length !== 8) {
-      // toast.error("CEP inválido");
+      toast.error("CEP inválido");
       return;
     }
 
     try {
       const { data } = await apiViaCep.get(`/ws/${cep}/json`);
       if (data.erro === "true") {
-        // toast.error("CEP inválido");
+        toast.error("CEP inválido");
         return;
       }
       data.logradouro && setFieldValue("logradouro", data.logradouro);
@@ -94,7 +95,7 @@ const FormEndereco = ({ endereco, dispatch, isLoading, isUpdate }) => {
       data.uf && setFieldValue("estado", data.uf);
     } catch (error) {
       console.log(error);
-      // toast.error("CEP inválido");
+      toast.error("CEP inválido");
     }
   };
 
@@ -103,129 +104,133 @@ const FormEndereco = ({ endereco, dispatch, isLoading, isUpdate }) => {
   }
 
   return (
-    <FormContainer>
-      <FormSection>
-        <TitleDiv>
-          <h1>{isUpdate ? "Atualizar endereço" : "Cadastrar endereço"}</h1>
-        </TitleDiv>
+    <>
+      {" "}
+      <Toaster />
+      <FormContainer>
+        <FormSection>
+          <TitleDiv>
+            <h1>{isUpdate ? "Atualizar endereço" : "Cadastrar endereço"}</h1>
+          </TitleDiv>
 
-        <Formik
-          initialValues={{
-            idPessoa: idPessoa,
-            tipo: endereco.tipo || "",
-            logradouro: endereco.logradouro || "",
-            numero: endereco.numero || "",
-            complemento: endereco.complemento || "",
-            cep: endereco.cep || "",
-            cidade: endereco.cidade || "",
-            estado: endereco.estado || "",
-            pais: endereco.pais || "",
-          }}
-          validationSchema={AddressSchema}
-          onSubmit={(values, { resetForm }) => {
-            values.cep = OnlyNumbers(values.cep);
-            isUpdate
-              ? handleEditEndereco(values, idEndereco, idPessoa, navigate)
-              : handleRegisterEndereco(values, idPessoa, navigate);
-            resetForm({ values: "" });
-          }}
-        >
-          {({ errors, touched, setFieldValue }) => (
-            <Form>
-              <FormDiv>
-                <FormItem>
-                  <Field name="cep">
-                    {({ field }) => (
-                      <MaskedInput
-                        {...field}
-                        mask={cepMask}
-                        placeholder="Digite o cep"
-                        type="text"
-                        onBlur={(event) => getCep(event, setFieldValue)}
-                      />
-                    )}
-                  </Field>
-                  {errors.cep && touched.cep ? (
-                    <ErrorMessage>{errors.cep}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+          <Formik
+            initialValues={{
+              idPessoa: idPessoa,
+              tipo: endereco.tipo || "",
+              logradouro: endereco.logradouro || "",
+              numero: endereco.numero || "",
+              complemento: endereco.complemento || "",
+              cep: endereco.cep || "",
+              cidade: endereco.cidade || "",
+              estado: endereco.estado || "",
+              pais: endereco.pais || "",
+            }}
+            validationSchema={AddressSchema}
+            onSubmit={(values, { resetForm }) => {
+              values.cep = OnlyNumbers(values.cep);
+              isUpdate
+                ? handleEditEndereco(values, idEndereco, idPessoa, navigate)
+                : handleRegisterEndereco(values, idPessoa, navigate);
+              resetForm({ values: "" });
+            }}
+          >
+            {({ errors, touched, setFieldValue }) => (
+              <Form>
+                <FormDiv>
+                  <FormItem>
+                    <Field name="cep">
+                      {({ field }) => (
+                        <MaskedInput
+                          {...field}
+                          mask={cepMask}
+                          placeholder="Digite o cep"
+                          type="text"
+                          onBlur={(event) => getCep(event, setFieldValue)}
+                        />
+                      )}
+                    </Field>
+                    {errors.cep && touched.cep ? (
+                      <ErrorMessage>{errors.cep}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field component="select" name="tipo" multiple={false}>
-                    <option value="" disabled defaultValue hidden>
-                      Selecione o tipo do endereço
-                    </option>
-                    <option value="RESIDENCIAL">Residencial</option>
-                    <option value="COMERCIAL">Comercial</option>
-                  </Field>
-                  {errors.tipo && touched.tipo ? (
-                    <ErrorMessage>{errors.tipo}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field component="select" name="tipo" multiple={false}>
+                      <option value="" disabled defaultValue hidden>
+                        Selecione o tipo do endereço
+                      </option>
+                      <option value="RESIDENCIAL">Residencial</option>
+                      <option value="COMERCIAL">Comercial</option>
+                    </Field>
+                    {errors.tipo && touched.tipo ? (
+                      <ErrorMessage>{errors.tipo}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field name="logradouro" placeholder="Logradouro" />
-                  {errors.logradouro && touched.logradouro ? (
-                    <ErrorMessage>{errors.logradouro}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field name="logradouro" placeholder="Logradouro" />
+                    {errors.logradouro && touched.logradouro ? (
+                      <ErrorMessage>{errors.logradouro}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field name="numero" placeholder="Número" />
-                  {errors.numero && touched.numero ? (
-                    <ErrorMessage>{errors.numero}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field name="numero" placeholder="Número" />
+                    {errors.numero && touched.numero ? (
+                      <ErrorMessage>{errors.numero}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field name="complemento" placeholder="Complemento" />
-                  {errors.complemento && touched.complemento ? (
-                    <ErrorMessage>{errors.complemento}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field name="complemento" placeholder="Complemento" />
+                    {errors.complemento && touched.complemento ? (
+                      <ErrorMessage>{errors.complemento}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field name="cidade" placeholder="Cidade" />
-                  {errors.cidade && touched.cidade ? (
-                    <ErrorMessage>{errors.cidade}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field name="cidade" placeholder="Cidade" />
+                    {errors.cidade && touched.cidade ? (
+                      <ErrorMessage>{errors.cidade}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field name="estado" placeholder="Estado" />
-                  {errors.estado && touched.estado ? (
-                    <ErrorMessage>{errors.estado}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field name="estado" placeholder="Estado" />
+                    {errors.estado && touched.estado ? (
+                      <ErrorMessage>{errors.estado}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <Field name="pais" placeholder="País" />
-                  {errors.pais && touched.pais ? (
-                    <ErrorMessage>{errors.pais}</ErrorMessage>
-                  ) : null}
-                </FormItem>
+                  <FormItem>
+                    <Field name="pais" placeholder="País" />
+                    {errors.pais && touched.pais ? (
+                      <ErrorMessage>{errors.pais}</ErrorMessage>
+                    ) : null}
+                  </FormItem>
 
-                <FormItem>
-                  <div>
-                    <ButtonSecondary
-                      type="button"
-                      padding={"12px 32px"}
-                      onClick={() => navigate(`/enderecos/${idPessoa}`)}
-                    >
-                      Cancelar
-                    </ButtonSecondary>
+                  <FormItem>
+                    <div>
+                      <ButtonSecondary
+                        type="button"
+                        padding={"12px 32px"}
+                        onClick={() => navigate(`/enderecos/${idPessoa}`)}
+                      >
+                        Cancelar
+                      </ButtonSecondary>
 
-                    <ButtonPrimary padding={"16px 32px"} type="submit">
-                      {isUpdate ? "Atualizar" : "Cadastrar"}
-                    </ButtonPrimary>
-                  </div>
-                </FormItem>
-              </FormDiv>
-            </Form>
-          )}
-        </Formik>
-      </FormSection>
-    </FormContainer>
+                      <ButtonPrimary padding={"16px 32px"} type="submit">
+                        {isUpdate ? "Atualizar" : "Cadastrar"}
+                      </ButtonPrimary>
+                    </div>
+                  </FormItem>
+                </FormDiv>
+              </Form>
+            )}
+          </Formik>
+        </FormSection>
+      </FormContainer>
+    </>
   );
 };
 
