@@ -22,6 +22,7 @@ import { confirmModal } from "../../components/toast/Toast";
 
 const Pessoas = ({ pessoas, dispatch }) => {
   const navigate = useNavigate();
+
   const setup = () => {
     getPessoas(dispatch);
   };
@@ -29,19 +30,6 @@ const Pessoas = ({ pessoas, dispatch }) => {
   useEffect(() => {
     setup();
   }, []);
-
-  // const confirmModal = (idPessoa, dispatch) => {
-  //   Swal.fire({
-  //     title: "Deletar pessoa?",
-  //     confirmButtonText: "Confirmar",
-  //     showDenyButton: true,
-  //     denyButtonText: "Cancelar",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       handleDeletePessoa(idPessoa, dispatch);
-  //     }
-  //   });
-  // };
 
   if (pessoas.length === 0) {
     return (
