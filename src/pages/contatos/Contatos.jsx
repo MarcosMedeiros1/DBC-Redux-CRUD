@@ -17,6 +17,7 @@ import {
   getContatos,
   handleDeleteContato,
 } from "../../store/actions/ContatosActions";
+import { confirmModal } from "../../components/toast/Toast";
 
 const Contatos = ({ contatos, dispatch }) => {
   const { idPessoa } = useParams();
@@ -93,7 +94,13 @@ const Contatos = ({ contatos, dispatch }) => {
                         type="button"
                         hoverColor={"#F12B2C"}
                         onClick={() =>
-                          handleDeleteContato(idContato, idPessoa, dispatch)
+                          confirmModal(
+                            "Deletar contato?",
+                            idContato,
+                            dispatch,
+                            handleDeleteContato,
+                            idPessoa,
+                          )
                         }
                       >
                         <FaTrashAlt />

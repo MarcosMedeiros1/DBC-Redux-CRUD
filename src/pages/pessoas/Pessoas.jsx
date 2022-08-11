@@ -18,6 +18,7 @@ import { ButtonSecondary, DefaultButton } from "../../components/button/Button";
 import { FormatDateUsaToBr } from "../../utils/utils";
 import Header from "../../components/header/Header";
 import { Container } from "../../components/container/Container";
+import { confirmModal } from "../../components/toast/Toast";
 
 const Pessoas = ({ pessoas, dispatch }) => {
   const navigate = useNavigate();
@@ -28,6 +29,19 @@ const Pessoas = ({ pessoas, dispatch }) => {
   useEffect(() => {
     setup();
   }, []);
+
+  // const confirmModal = (idPessoa, dispatch) => {
+  //   Swal.fire({
+  //     title: "Deletar pessoa?",
+  //     confirmButtonText: "Confirmar",
+  //     showDenyButton: true,
+  //     denyButtonText: "Cancelar",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       handleDeletePessoa(idPessoa, dispatch);
+  //     }
+  //   });
+  // };
 
   if (pessoas.length === 0) {
     return (
@@ -105,7 +119,14 @@ const Pessoas = ({ pessoas, dispatch }) => {
                     <DefaultButton
                       type="button"
                       hoverColor={"#F12B2C"}
-                      onClick={() => handleDeletePessoa(idPessoa, dispatch)}
+                      onClick={() =>
+                        confirmModal(
+                          "Deletar pessoa?",
+                          idPessoa,
+                          dispatch,
+                          handleDeletePessoa,
+                        )
+                      }
                     >
                       <FaTrashAlt />
                     </DefaultButton>

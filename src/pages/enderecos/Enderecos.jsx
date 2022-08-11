@@ -17,6 +17,7 @@ import {
 } from "../../store/actions/EnderecosActions";
 import Header from "../../components/header/Header";
 import { Container } from "../../components/container/Container";
+import { confirmModal } from "../../components/toast/Toast";
 
 const Enderecos = ({ enderecos, dispatch }) => {
   const { idPessoa } = useParams();
@@ -123,7 +124,13 @@ const Enderecos = ({ enderecos, dispatch }) => {
                         type="button"
                         hoverColor={"#F12B2C"}
                         onClick={() =>
-                          handleDeleteEndereco(idEndereco, idPessoa, dispatch)
+                          confirmModal(
+                            "Deletar endereço?",
+                            idEndereco,
+                            dispatch,
+                            handleDeleteEndereco,
+                            idPessoa,
+                          )
                         }
                       >
                         <FaTrashAlt />

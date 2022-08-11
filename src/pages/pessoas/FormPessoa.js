@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
-import toast, { Toaster } from "react-hot-toast";
 import MaskedInput from "react-text-mask";
 import {
   ErrorMessage,
@@ -29,6 +28,7 @@ import {
   handleSetEditPessoa,
 } from "../../store/actions/PessoasActions";
 import { Loading } from "../../components/loading/Loading";
+import { Toast } from "../../components/toast/Toast";
 
 const FormSchema = Yup.object().shape({
   nome: Yup.string()
@@ -97,10 +97,10 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
               isUpdate
                 ? handleEditPessoa(values, idPessoa, navigate)
                 : handleRegisterPessoa(values, dispatch, navigate);
+              resetForm({ values: "" });
             } else {
-              toast.error("Insira uma data válida");
+              Toast.fire({ title: "Informe uma data válida", icon: "error" });
             }
-            resetForm({ values: "" });
           }}
         >
           {({ errors, touched }) => (
@@ -177,7 +177,6 @@ const FormPessoa = ({ pessoa, dispatch, isLoading, isUpdate }) => {
           )}
         </Formik>
       </FormSection>
-      <Toaster />
     </FormContainer>
   );
 };

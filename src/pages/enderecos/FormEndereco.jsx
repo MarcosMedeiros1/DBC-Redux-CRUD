@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import toast, { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import MaskedInput from "react-text-mask";
 import { cepMask, OnlyNumbers } from "../../utils/utils";
@@ -20,8 +20,8 @@ import {
   handleSetEditEndereco,
 } from "../../store/actions/EnderecosActions";
 import { ButtonPrimary, ButtonSecondary } from "../../components/button/Button";
+import { Toast } from "../../components/toast/Toast";
 import { apiViaCep } from "../../api";
-import { useEffect } from "react";
 
 const AddressSchema = Yup.object().shape({
   cep: Yup.string()
@@ -79,14 +79,14 @@ const FormEndereco = ({ endereco, dispatch, isLoading, isUpdate }) => {
     const cep = OnlyNumbers(event.target.value);
 
     if (cep.length !== 8) {
-      toast.error("CEP inválido");
+      Toast.fire({ title: "CEP inválido", icon: "error" });
       return;
     }
 
     try {
       const { data } = await apiViaCep.get(`/ws/${cep}/json`);
       if (data.erro === "true") {
-        toast.error("CEP inválido");
+        Toast.fire({ title: "CEP inválido", icon: "error" });
         return;
       }
       data.logradouro && setFieldValue("logradouro", data.logradouro);
@@ -95,7 +95,7 @@ const FormEndereco = ({ endereco, dispatch, isLoading, isUpdate }) => {
       data.uf && setFieldValue("estado", data.uf);
     } catch (error) {
       console.log(error);
-      toast.error("CEP inválido");
+      Toast.fire({ title: "CEP inválido", icon: "error" });
     }
   };
 
@@ -105,8 +105,6 @@ const FormEndereco = ({ endereco, dispatch, isLoading, isUpdate }) => {
 
   return (
     <>
-      {" "}
-      <Toaster />
       <FormContainer>
         <FormSection>
           <TitleDiv>
