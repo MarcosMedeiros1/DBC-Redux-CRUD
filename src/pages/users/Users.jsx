@@ -17,10 +17,10 @@ import { handleRegisterUser } from "../../store/actions/AuthActions";
 const SignupSchema = Yup.object().shape({
   login: Yup.string()
     .min(2, "Mínimo 2 caracteres")
-    .max(50, "Máximo 50 caracteres")
+    .max(20, "Máximo 20 caracteres")
     .required("Campo obrigatório"),
   senha: Yup.string()
-    .min(2, "Mínimo 2 caracteres")
+    .min(3, "Mínimo 3 caracteres")
     .max(50, "Máximo 50 caracteres")
     .required("Campo obrigatório"),
 });
